@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "805245908325",
+    "project_id": "chatapplication-57251",
+    "storage_bucket": "chatapplication-57251.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805245908325:android:4dd80ff4ed8c98b4379d8c",
+        "android_client_info": {
+          "package_name": "com.example.textingslap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-MHtUOafa8x0wHcUvldPddwQ0Tk50E1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
