@@ -1,13 +1,12 @@
 import 'dart:math';
-
+import 'package:textingslap/pages/chatPage.dart';
+import 'package:textingslap/pages/home.dart';
+import 'package:textingslap/pages/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:textingslap/auth/authService.dart';
-import 'package:textingslap/pages/chatPage.dart';
-import 'package:textingslap/pages/home.dart';
 import 'package:textingslap/pages/secondHomePage.dart';
-import 'package:textingslap/pages/signin.dart';
 import 'package:textingslap/service/dataBase.dart';
 import 'package:textingslap/service/shared_pref.dart';
 

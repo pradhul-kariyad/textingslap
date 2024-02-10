@@ -1,8 +1,7 @@
 // import 'dart:html';
 // import 'dart:js';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/auth/authService.dart';
 import 'package:textingslap/chat/chatService.dart';

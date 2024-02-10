@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/pages/signUp.dart';
 
@@ -13,7 +13,7 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   String email = "";
   final _formKey = GlobalKey<FormState>();
-  TextEditingController userMailController = new TextEditingController();
+  TextEditingController userMailController = TextEditingController();
   resetPassword() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
@@ -66,7 +66,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    SizedBox(height: 2,),
+                    SizedBox(
+                      height: 2,
+                    ),
                     Center(
                       child: Text(
                         "Login your account",
@@ -126,7 +128,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email_outlined,
-                                          color: Color.fromARGB(255, 12, 148, 146),
+                                          color:
+                                              Color.fromARGB(255, 12, 148, 146),
                                           size: 22,
                                         ),
                                         border: InputBorder.none),
@@ -137,7 +140,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     padding: const EdgeInsets.only(top: 30),
                                     child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(255, 12, 148, 146)),
+                                            backgroundColor: Color.fromARGB(
+                                                255, 12, 148, 146)),
                                         onPressed: () {
                                           if (_formKey.currentState!
                                               .validate()) {
@@ -158,14 +162,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: ()  {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return SignUp(
-                                  onTap: () {},
-                                );
-                              }));
-                            },
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignUp(
+                            onTap: () {},
+                          );
+                        }));
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

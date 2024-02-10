@@ -1,13 +1,12 @@
 // import 'dart:math';
-
+import 'package:textingslap/service/dataBase.dart';
+import 'package:textingslap/pages/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/auth/authService.dart';
 import 'package:textingslap/pages/forgotPassword.dart';
-import 'package:textingslap/pages/home.dart';
 import 'package:textingslap/pages/signUp.dart';
-import 'package:textingslap/service/dataBase.dart';
 
 class SignIn extends StatefulWidget {
   final void Function()? onTap;
@@ -193,7 +192,8 @@ class _SignInState extends State<SignIn> {
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email_outlined,
-                                          color: Color.fromARGB(255, 12, 148, 146),
+                                          color:
+                                              Color.fromARGB(255, 12, 148, 146),
                                           size: 22,
                                         ),
                                         border: InputBorder.none),
@@ -230,7 +230,8 @@ class _SignInState extends State<SignIn> {
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.password,
-                                          color: Color.fromARGB(255, 12, 148, 146),
+                                          color:
+                                              Color.fromARGB(255, 12, 148, 146),
                                           size: 22,
                                         ),
                                         border: InputBorder.none),
@@ -259,7 +260,8 @@ class _SignInState extends State<SignIn> {
                                     padding: const EdgeInsets.only(top: 30),
                                     child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(255, 12, 148, 146)),
+                                            backgroundColor: Color.fromARGB(
+                                                255, 12, 148, 146)),
                                         onPressed: () {
                                           if (_formkey.currentState!
                                               .validate()) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/model/usermodel.dart';
@@ -50,19 +52,41 @@ class _MyWidgetState extends State<MyWidget> {
                 ],
               ),
             ),
-            body: ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  UsersModel model = UsersModel.getModelFromJson(
-                      json: snapshot.data!.docs[index].data());
-                  return ListTile(
-                    leading: CircleAvatar(
-                      radius: 20,
-                    ),
-                    title: Text(model.name),
-                    subtitle: Text(model.email),
-                  );
-                }),
+            body:
+        ListView.builder(
+  itemCount: snapshot.data!.docs.length,
+  itemBuilder: (context, index) {
+    // Access the data from Firestore document and convert it to Map<String, dynamic>
+    Map<String, dynamic> userData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+    
+    // Create a UsersModel object using the data
+    UsersModel model = UsersModel.getModelFromJson(userData);
+    
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 20,
+        // You might want to set a profile picture here based on model.profilepic
+      ),
+      title: Text(model.Name),
+      subtitle: Text(model.email),
+    );
+  }
+)
+
+
+            //  ListView.builder(
+            //     itemCount: snapshot.data!.docs.length,
+            //     itemBuilder: (context, index) {
+            //       UsersModel model = UsersModel.getModelFromJson(
+            //           json: snapshot.data!.docs[index].data());
+            //       return ListTile(
+            //         leading: CircleAvatar(
+            //           radius: 20,
+            //         ),
+            //         title: Text(model.name),
+            //         subtitle: Text(model.email),
+            //       );
+            //     }),
           );
         }
       },
