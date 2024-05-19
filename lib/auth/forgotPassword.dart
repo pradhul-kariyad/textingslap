@@ -1,7 +1,9 @@
+// ignore_for_file: file_names, use_build_context_synchronously, unused_import, unused_field
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:textingslap/pages/signUp.dart';
+import 'package:textingslap/auth/signUp.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -14,14 +16,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String email = "";
   final _formKey = GlobalKey<FormState>();
   TextEditingController userMailController = TextEditingController();
+  late String _email;
+
   resetPassword() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Color.fromARGB(255, 12, 148, 146),
           content: Text(
-        "Password reset Email has been sent",
-        style: TextStyle(fontSize: 18),
-      )));
+            "Password reset email has been sent",
+            style: TextStyle(fontWeight: FontWeight.bold),
+            // style: TextStyle(fontSize: 18),
+          )));
     } on FirebaseAuthException catch (e) {
       if (e.code == "user note found") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -38,7 +44,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           child: Stack(
             children: [
               // Container(
@@ -108,33 +114,51 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         fontSize: 15),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: userMailController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Please enter Email";
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.email_outlined,
-                                          color:
-                                              Color.fromARGB(255, 12, 148, 146),
-                                          size: 22,
-                                        ),
-                                        border: InputBorder.none),
-                                  ),
+                                // Container(
+                                //   padding: EdgeInsets.only(right: 10),
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(10),
+                                //     border: Border.all(
+                                //       width: 1,
+                                //       color: Colors.black38,
+                                //     ),
+                                //   ),
+                                //   child:
+                                TextFormField(
+                                  controller: userMailController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    String pattern =
+                                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                                    RegExp regExp = RegExp(pattern);
+                                    if (!regExp.hasMatch(value!)) {
+                                      return 'Enter a valid email';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _email = value!;
+                                  },
+                                  decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 12, 148, 146))),
+                                      prefixIcon: Icon(
+                                        Icons.email_outlined,
+                                        color:
+                                            Color.fromARGB(255, 12, 148, 146),
+                                        size: 22,
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13))),
                                 ),
+                                // ),
                                 Center(
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 30),
@@ -161,44 +185,45 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SignUp(
-                            onTap: () {},
-                          );
-                        }));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SignUp(
+                                onTap: () {},
+                              );
+                            }));
+                          },
+                          child: Text(
                             "Don't have an account? ",
                             style: TextStyle(
                                 color: Colors.grey[200],
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return SignUp(
-                                  onTap: () {},
-                                );
-                              }));
-                            },
-                            child: Text(
-                              "Sign Up Now !",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 12, 148, 146),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13),
-                            ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SignUp(
+                                onTap: () {},
+                              );
+                            }));
+                          },
+                          child: Text(
+                            "Sign up now",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Color.fromARGB(255, 12, 148, 146),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

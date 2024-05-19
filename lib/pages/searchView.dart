@@ -1,9 +1,11 @@
+// ignore_for_file: unnecessary_import, unused_import
+
 import 'package:textingslap/chat/chatService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/auth/authService.dart';
-import 'package:textingslap/pages/secondChat.dart';
+import 'package:textingslap/chat/secondChat.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);
@@ -73,22 +75,22 @@ class _SearchViewState extends State<SearchView> {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     if (userData['Name'] != _authService.getCurrentUser()!.email) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 1),
-        child: ListTile(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return SecondChat(
-                receiverEmail: userData['Name'],
-                receiverId: userData['Uid'],
-              );
-            }));
-          },
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: Divider(),
-          ),
-          title: Text(userData['Name']),
+      return ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return SecondChat(
+              receiverEmail: userData['Name'],
+              receiverId: userData['Uid'],
+            );
+          }));
+        },
+        subtitle: Padding(
+          padding: const EdgeInsets.only(),
+          // child: Divider(),
+        ),
+        title: Text(
+          userData['Name'],
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
         ),
       );
     } else {
@@ -100,11 +102,32 @@ class _SearchViewState extends State<SearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: CupertinoSearchTextField(
-          controller: _searchController,
-        ),
-      ),
+          backgroundColor: Color.fromARGB(255, 111, 57, 132),
+          title: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            // ignore: sort_child_properties_last
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18),
+              child: TextFormField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: "Search user...",
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(255, 205, 204, 204)),
+                  border: InputBorder.none,
+                  // prefixIcon: IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(
+                  //       Icons.manage_search_outlined,
+                  //       color: Colors.red,
+                  //     ))
+                ),
+              ),
+            ),
+            width: 301,
+            height: 34,
+          )),
       body: ListView.builder(
         itemCount: _resultList.length,
         itemBuilder: (context, index) {

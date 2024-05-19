@@ -1,4 +1,8 @@
 // import 'package:provider/provider.dart';
+// ignore_for_file: use_build_context_synchronously, avoid_print, await_only_futures
+// import 'dart:math';
+import 'dart:developer';
+import '../../pages/notificationSreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,6 +21,32 @@ class AuthService {
   //   print('Payload: ${message.data}');
   // }
 
+  void handleMessage(RemoteMessage? message) {
+    if (message == null) return;
+
+    navigatorKey.currentState?.pushNamed(
+      NotificationScreen.route,
+      arguments: message,
+    );
+  }
+
+  Future initPushNotifications() async {
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+            alert: true, badge: true, sound: true);
+    FirebaseMessaging.instance.getInitialMessage().then(handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+  }
+
+  //
+  Future<void> handleBackgroundMessage(RemoteMessage message) async {
+    log('Title : ${message.notification?.title}');
+    log('Body : ${message.notification?.body}');
+    log('Playload : ${message.data}');
+  }
+  //
+
   //function to initial notifications...
   Future<void> initNotificatoins() async {
     //request permission from user (will prompt user)...
@@ -28,29 +58,30 @@ class AuthService {
     //print the token (normally ypu would send this to you server)
     print("Token :$fCMToken");
     // FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
     //initialize further settings for push notification...
-    initNotificatoins();
+    initPushNotifications();
   }
 
 //function to handle received messages...
-  void handleMessage(RemoteMessage? message) {
-// if the message is null , do nothing...
-    if (message == null) return;
-// navigator to new sreen when message is received and  user taps notification...
-    navigatorKey.currentState
-        ?.pushNamed('/notification_sreen', arguments: message);
-  }
+//   void handleMessage(RemoteMessage? message) {
+// // if the message is null , do nothing...
+//     if (message == null) return;
+// // navigator to new sreen when message is received and  user taps notification...
+//     navigatorKey.currentState
+//         ?.pushNamed('/notification_sreen', arguments: message);
+//   }
 
 //function to initialize  background settings...
 
-  Future initPushNotifications() async {
-    // handle notification if the app was terminated and now opened...
-    FirebaseMessaging.instance.getInitialMessage().then((handleMessage));
+  // Future initPushNotifications() async {
+  //   // handle notification if the app was terminated and now opened...
+  //   FirebaseMessaging.instance.getInitialMessage().then((handleMessage));
 
-    // attach event listeners for when a notification opens the app...
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
-  }
+  //   // attach event listeners for when a notification opens the app...
+  //   FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+  // }
 
   //get current user:
 
@@ -85,22 +116,21 @@ class AuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(title: Text(e.toString()));
-          });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Color.fromARGB(255, 12, 148, 146),
+          content: Text(
+            "Your not a member please Register now...",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )));
       print("Some error occured");
     }
     return null;
   }
 
   Future<UserCredential> signUpWithEmailAndPassword(
-    String email,
-    password,
-    name,
-    // ansila
-  ) async {
+      String email, password, name, confirmPassword
+      // ansila
+      ) async {
     try {
       //create user:
 
@@ -122,7 +152,13 @@ class AuthService {
   }
 
   //signOut:
-  Future<void> signOut() async {
-    return await _auth.signOut();
+  Future<void> signOut(BuildContext context) async {
+    await _auth.signOut();
+    // await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     backgroundColor: Color.fromARGB(255, 12, 148, 146),
+    //     content: Text(
+    //       "Log out...",
+    //       style: TextStyle(fontWeight: FontWeight.bold),
+    //     )));
   }
 }

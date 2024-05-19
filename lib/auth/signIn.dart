@@ -1,12 +1,17 @@
 // import 'dart:math';
+// ignore_for_file: unused_field, avoid_print, use_build_context_synchronously, unused_import
+
+import 'dart:developer';
+
+import 'package:textingslap/auth/forgotPassword.dart';
+import 'package:textingslap/auth/signUp.dart';
+import 'package:textingslap/colors/colorData.dart';
+import 'package:textingslap/home/secondHomePage.dart';
 import 'package:textingslap/service/dataBase.dart';
-import 'package:textingslap/pages/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/auth/authService.dart';
-import 'package:textingslap/pages/forgotPassword.dart';
-import 'package:textingslap/pages/signUp.dart';
 
 class SignIn extends StatefulWidget {
   final void Function()? onTap;
@@ -22,9 +27,9 @@ class _SignInState extends State<SignIn> {
   final AuthService _authService = AuthService();
 
   TextEditingController userMailController = TextEditingController();
-  // TextEditingController userNameController = TextEditingController();
   TextEditingController userPasswordController = TextEditingController();
-
+  late String _email;
+  bool isSelected = true;
   final _formkey = GlobalKey<FormState>();
 
 //
@@ -105,7 +110,7 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           child: Stack(
             children: [
               // Container(
@@ -137,7 +142,7 @@ class _SignInState extends State<SignIn> {
                       child: Text(
                         "Login your account",
                         style: TextStyle(
-                            color: Colors.grey[200],
+                            color: Colors.white,
                             fontSize: 17,
                             fontWeight: FontWeight.w500),
                       ),
@@ -155,7 +160,7 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                           ),
-                          height: 382,
+                          height: 400,
                           width: MediaQuery.of(context).size.width,
                           child: Form(
                             key: _formkey,
@@ -172,33 +177,52 @@ class _SignInState extends State<SignIn> {
                                         fontSize: 15),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: userMailController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Please enter Email";
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.email_outlined,
-                                          color:
-                                              Color.fromARGB(255, 12, 148, 146),
-                                          size: 22,
-                                        ),
-                                        border: InputBorder.none),
-                                  ),
+                                // Container(
+                                //   padding: EdgeInsets.only(right: 10),
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(10),
+                                //     border: Border.all(
+                                //       width: 1,
+                                //       color: Colors.black38,
+                                //     ),
+                                //   ),
+                                //   child:
+                                TextFormField(
+                                  controller: userMailController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    String pattern =
+                                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                                    RegExp regExp = RegExp(pattern);
+                                    if (!regExp.hasMatch(value!)) {
+                                      return 'Enter a valid email';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _email = value!;
+                                  },
+                                  decoration: InputDecoration(
+                                    // labelText: "Email",
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 12, 148, 146))),
+                                      // prefixIcon: Icon(
+                                      //   Icons.email_outlined,
+                                      //   color:
+                                      //       Color.fromARGB(255, 12, 148, 146),
+                                      //   size: 22,
+                                      // ),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13))),
                                 ),
+                                // ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 20, bottom: 10),
@@ -209,38 +233,59 @@ class _SignInState extends State<SignIn> {
                                         fontSize: 15),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: userPasswordController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Please enter Password";
-                                      }
-                                      return null;
-                                    },
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                        prefixIcon: Icon(
-                                          Icons.password,
+                                // Container(
+                                //   padding: EdgeInsets.only(right: 10),
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(10),
+                                //     border: Border.all(
+                                //       width: 1,
+                                //       color: Colors.black38,
+                                //     ),
+                                //   ),
+                                //   child:
+                                TextFormField(
+                                  controller: userPasswordController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter password';
+                                    }
+
+                                    return value!.length < 6
+                                        ? 'Must be at least 6 character'
+                                        : null;
+                                  },
+                                  obscureText: isSelected ? true : false,
+                                  decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 12, 148, 146))),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isSelected = !isSelected;
+                                          });
+                                        },
+                                        icon: Icon(
+                                          isSelected
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
                                           color:
                                               Color.fromARGB(255, 12, 148, 146),
                                           size: 22,
                                         ),
-                                        border: InputBorder.none),
-                                  ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13))),
                                 ),
+                                // ),
                                 Container(
                                   padding: EdgeInsets.only(top: 7),
                                   alignment: Alignment.bottomRight,
-                                  child: GestureDetector(
+                                  child: InkWell(
                                     onTap: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
@@ -250,6 +295,8 @@ class _SignInState extends State<SignIn> {
                                     child: Text(
                                       " Forgot Password? ",
                                       style: TextStyle(
+                                          color: Colors.black,
+                                          decoration: TextDecoration.underline,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 13),
                                     ),
@@ -286,37 +333,47 @@ class _SignInState extends State<SignIn> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SignUp(
-                            onTap: () {},
-                          );
-                        }));
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SignUp(
+                                onTap: () {},
+                              );
+                            }));
+                          },
+                          child: Text(
                             "Not a member? ",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 193, 190, 190),
+                                // decoration: TextDecoration.underline,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13),
                           ),
-                          GestureDetector(
-                            onTap: widget.onTap,
-                            child: Text(
-                              "Register now",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 12, 148, 146),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13),
-                            ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            log("register");
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SignUp(
+                                onTap: () {},
+                              );
+                            }));
+                          },
+                          child: Text(
+                            "Register now",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Color.fromARGB(255, 12, 148, 146),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -334,9 +391,19 @@ class _SignInState extends State<SignIn> {
 
     User? user =
         await _authService.signInWithEmailAndPassword(context, email, password);
-    if (user == null) {
-      print("User is successfully signed in ");
-      Navigator.pushNamed(context, "/home");
+
+    if (user != null) {
+      print("User is successfully sign in ");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return secondHomePage();
+      }));
+      // Navigator.pushNamed(context, "/home");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: ColorData.black,
+          content: Text(
+            "Sign in successful...",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )));
     } else {
       print("Some error happend");
     }

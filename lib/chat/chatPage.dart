@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:textingslap/pages/home.dart';
-import 'package:textingslap/pages/signIn.dart';
+import 'package:textingslap/auth/signIn.dart';
+import 'package:textingslap/colors/colorData.dart';
+import 'package:textingslap/home/home.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -13,7 +14,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF553370),
+      backgroundColor: ColorData.pink,
       body: SingleChildScrollView(
         child: Container(
           child: Column(

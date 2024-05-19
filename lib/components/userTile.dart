@@ -1,4 +1,6 @@
-import 'package:textingslap/myPhotos.dart';
+// ignore_for_file: unused_import
+
+import 'package:textingslap/img/myPhotos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,16 +21,23 @@ class UserTile extends StatelessWidget {
         ),
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Container(
-              // width: 1000,
               height: 60,
               decoration: BoxDecoration(
+                  border: Border.all(
+                      width: 1, color: Color.fromARGB(255, 211, 200, 200)),
                   // color: Color.fromARGB(255, 12, 148, 146),
-                  borderRadius: BorderRadius.circular(17)),
+                  borderRadius: BorderRadius.circular(19)),
               child: Row(
                 children: [
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(Icons.arrow_forward_ios_sharp)),
                   Padding(
-                    padding: const EdgeInsets.only(right: 16),
+                    padding: EdgeInsets.only(right: 16),
                     // child: CircleAvatar(radius: 23,backgroundImage: AssetImage(photo1),),
                   ),
                   // Padding(
@@ -41,11 +50,11 @@ class UserTile extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                  )
+                  ),
                 ],
               ),
             ),
-            Divider()
+            // Divider()
           ],
         ),
       ),

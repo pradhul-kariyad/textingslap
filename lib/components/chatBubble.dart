@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:textingslap/colors/colorData.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;
@@ -13,7 +14,9 @@ class ChatBubble extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: isCurrentUser ? Colors.green : Colors.grey.shade500),
+            color: isCurrentUser
+                ? ColorData.black
+                : Color.fromARGB(255, 196, 195, 195)),
         padding: EdgeInsets.all(13),
         margin: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
         child: Text(

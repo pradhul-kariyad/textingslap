@@ -1,10 +1,11 @@
-import 'dart:developer';
+// ignore_for_file: unused_import
 
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:textingslap/myPhotos.dart';
-import 'package:textingslap/pages/chatPage.dart';
-import 'package:textingslap/pages/userliat.dart';
+import 'package:textingslap/img/myPhotos.dart';
+import 'package:textingslap/chat/chatPage.dart';
+import '../../pages/userliat.dart';
 import 'package:textingslap/service/dataBase.dart';
 
 class Home extends StatefulWidget {
@@ -62,7 +63,7 @@ class _HomeState extends State<Home> {
         },
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           child: Column(
             children: [
               Padding(

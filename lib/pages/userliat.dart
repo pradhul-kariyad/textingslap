@@ -1,8 +1,9 @@
-import 'dart:convert';
+// ignore_for_file: unnecessary_cast, avoid_unnecessary_containers, unused_import
 
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:textingslap/model/usermodel.dart';
+import 'package:textingslap/models/usermodel.dart';
 
 class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
@@ -36,58 +37,56 @@ class _MyWidgetState extends State<MyWidget> {
           );
         } else {
           return Scaffold(
-            backgroundColor: Color(0xFFF5F6F9),
-            appBar: AppBar(
-              elevation: 0,
-              centerTitle: true,
-              //   backgroundColor: AppColors.white,
-              leading: BackButton(),
+              backgroundColor: Color(0xFFF5F6F9),
+              appBar: AppBar(
+                elevation: 0,
+                centerTitle: true,
+                //   backgroundColor: AppColors.white,
+                leading: BackButton(),
 
-              title: Column(
-                children: [
-                  Text(
-                    "Your Cart",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ],
+                title: Column(
+                  children: [
+                    Text(
+                      "Your Cart",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            body:
-        ListView.builder(
-  itemCount: snapshot.data!.docs.length,
-  itemBuilder: (context, index) {
-    // Access the data from Firestore document and convert it to Map<String, dynamic>
-    Map<String, dynamic> userData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-    
-    // Create a UsersModel object using the data
-    UsersModel model = UsersModel.getModelFromJson(userData);
-    
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 20,
-        // You might want to set a profile picture here based on model.profilepic
-      ),
-      title: Text(model.Name),
-      subtitle: Text(model.email),
-    );
-  }
-)
+              body: ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    // Access the data from Firestore document and convert it to Map<String, dynamic>
+                    Map<String, dynamic> userData = snapshot.data!.docs[index]
+                        .data() as Map<String, dynamic>;
 
+                    // Create a UsersModel object using the data
+                    UsersModel model = UsersModel.getModelFromJson(userData);
 
-            //  ListView.builder(
-            //     itemCount: snapshot.data!.docs.length,
-            //     itemBuilder: (context, index) {
-            //       UsersModel model = UsersModel.getModelFromJson(
-            //           json: snapshot.data!.docs[index].data());
-            //       return ListTile(
-            //         leading: CircleAvatar(
-            //           radius: 20,
-            //         ),
-            //         title: Text(model.name),
-            //         subtitle: Text(model.email),
-            //       );
-            //     }),
-          );
+                    return ListTile(
+                      leading: CircleAvatar(
+                        radius: 20,
+                        // You might want to set a profile picture here based on model.profilepic
+                      ),
+                      title: Text(model.Name),
+                      subtitle: Text(model.email),
+                    );
+                  })
+
+              //  ListView.builder(
+              //     itemCount: snapshot.data!.docs.length,
+              //     itemBuilder: (context, index) {
+              //       UsersModel model = UsersModel.getModelFromJson(
+              //           json: snapshot.data!.docs[index].data());
+              //       return ListTile(
+              //         leading: CircleAvatar(
+              //           radius: 20,
+              //         ),
+              //         title: Text(model.name),
+              //         subtitle: Text(model.email),
+              //       );
+              //     }),
+              );
         }
       },
     );

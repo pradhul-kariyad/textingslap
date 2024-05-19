@@ -1,31 +1,30 @@
-// import 'dart:js';
-// import 'package:textingslap/auth/loginOrRegister.dart';
-// import 'package:textingslap/pages/chatPage.dart';
-// import 'package:textingslap/pages/forgotPassword.dart';
-// import 'package:textingslap/pages/home.dart';
-// import 'package:textingslap/pages/signUp.dart';
-// import 'package:text
-//
-// ingslap/pages/signin.dart';
+// ignore_for_file: unused_import
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:textingslap/auth/authGate.dart';
 import 'package:textingslap/auth/authService.dart';
-import 'package:textingslap/pages/notification.dart';
-import 'package:textingslap/themes/themesProvider.dart';
+import 'package:textingslap/provider/themesProvider.dart';
+import '../pages/notification.dart';
+import '../pages/notificationSreen.dart';
+import 'package:textingslap/theme/firstTheme/themes/themesProvider.dart';
+import 'package:sizer/sizer.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // await Future.delayed(Duration(seconds: 10));
+  // FlutterNativeSplash.remove();
   await Firebase.initializeApp();
   await AuthService().initNotificatoins();
   runApp(ChangeNotifierProvider(
     create: (context) {
       return ThemeProvider();
     },
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
@@ -39,14 +38,23 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AuthGate(),
-      routes: {
-        '/notification_sreen': (context) => NotificationPage(),
-      },
-      // theme: Provider.of<ThemeProvider>(context).themeData,
-      navigatorKey: navigatorKey,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) {
+          return ThemesProvider();
+        }),
+      ],
+      child: Sizer(
+        builder: (BuildContext context, Orientation orientation,
+            DeviceType deviceType) {
+          return MaterialApp(
+            // theme: theme.getTheme(),
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            home: AuthGate(),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textingslap/myPhotos.dart';
+import 'package:textingslap/img/myPhotos.dart';
 
 class FirstProfile extends StatefulWidget {
   const FirstProfile({super.key, required this.name});

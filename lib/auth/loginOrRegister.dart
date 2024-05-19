@@ -2,8 +2,8 @@
 // import 'package:textingslap/pages/chatPage.dart';
 
 import 'package:flutter/material.dart';
-import 'package:textingslap/pages/signIn.dart';
-import 'package:textingslap/pages/signUp.dart';
+import 'package:textingslap/auth/signIn.dart';
+import 'package:textingslap/auth/signUp.dart';
 
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({super.key});

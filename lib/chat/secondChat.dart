@@ -1,10 +1,13 @@
 // import 'dart:html';
 // import 'dart:js';
+// ignore_for_file: unused_import
+
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:textingslap/auth/authService.dart';
 import 'package:textingslap/chat/chatService.dart';
+import 'package:textingslap/colors/colorData.dart';
 import 'package:textingslap/components/chatBubble.dart';
 
 class SecondChat extends StatelessWidget {
@@ -30,7 +33,8 @@ class SecondChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 12, 148, 146),
+        toolbarHeight: 60,
+        backgroundColor: ColorData.black,
         foregroundColor: Colors.white,
         title: Text(receiverEmail),
       ),
@@ -58,21 +62,18 @@ class SecondChat extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20),
               child: Text("Error",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 12, 148, 146))),
+                      fontWeight: FontWeight.bold, color: ColorData.black)),
             );
           }
           //loading
           if (snaphot.connectionState == ConnectionState.waiting) {
             print("99999999999999999999999999999999999");
-
             return Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Text(
                 "Loading...",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 12, 148, 146)),
+                    fontWeight: FontWeight.bold, color: ColorData.black),
               ),
             );
           }
@@ -111,14 +112,21 @@ class SecondChat extends StatelessWidget {
   Widget _buildUserInput() {
     return Row(
       children: [
-        Expanded(
+        SizedBox(
+          width: 9,
+        ),
+        Container(
+          width: 285,
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
+              // width: 20,
               padding: EdgeInsets.only(left: 18),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(255, 240, 237, 237)),
+                border: Border.all(width: 1, color: (Colors.black)),
+                borderRadius: BorderRadius.circular(30),
+                // color: const Color.fromARGB(255, 240, 237, 237)
+              ),
               child: Row(
                 children: [
                   Expanded(
@@ -129,32 +137,36 @@ class SecondChat extends StatelessWidget {
                       // },
                       decoration: InputDecoration(
                           hintText: "Typing a message",
-                          hintStyle: TextStyle(color: Colors.black45),
+                          hintStyle: TextStyle(color: Colors.black54),
                           border: InputBorder.none),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 250, 242, 242),
-                          borderRadius: BorderRadius.circular(19)),
-                      child: IconButton(
-                          onPressed: sendMessage,
-                          icon: Icon(
-                            Icons.send,
-                            size: 24,
-                            color: Colors.grey[600],
-                          )),
-                    ),
-                  )
                 ],
               ),
             ),
           ),
         ),
+        SizedBox(width: 5),
+        Padding(
+          padding: const EdgeInsets.only(right: 11, bottom: 19),
+          child: Container(
+            width: 49,
+            height: 49,
+            decoration: BoxDecoration(
+              color: ColorData.black,
+              // border: Border.all(width: 1, color: (Colors.black)),
+              borderRadius: BorderRadius.circular(27),
+              // color: const Color.fromARGB(255, 240, 237, 237)
+            ),
+            child: IconButton(
+                onPressed: sendMessage,
+                icon: Icon(
+                  Icons.send,
+                  size: 24,
+                  color: Colors.white,
+                )),
+          ),
+        )
         // IconButton(onPressed: sendMessage, icon: Icon(Icons.arrow_upward))
       ],
     );
