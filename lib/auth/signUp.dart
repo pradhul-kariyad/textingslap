@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously, unnecessary_null_comparison, unused_import, unused_field
-import 'dart:math';
+import 'dart:developer';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:textingslap/auth/signIn.dart';
 import 'package:textingslap/chat/chatPage.dart';
 import 'package:textingslap/colors/colorData.dart';
@@ -53,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         UserCredential user = await _authService.signUpWithEmailAndPassword(
             email, password, name, confirmPassword);
         if (user != null) {
-          print("User is successfully created");
+          log("User is successfully created");
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: ColorData.black,
               content: Text(
@@ -66,28 +67,71 @@ class _SignUpState extends State<SignUp> {
           );
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Color.fromARGB(255, 12, 148, 146),
-            content: Text(
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
               "Please confirm your password",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 13.sp),
             ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Color.fromARGB(255, 12, 148, 146)),
+                ),
+              ),
+            ],
           ),
         );
+
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     backgroundColor: Color.fromARGB(255, 12, 148, 146),
+        //     content: Text(
+        //       "Please confirm your password",
+        //       style: TextStyle(fontWeight: FontWeight.bold),
+        //     ),
+        //   ),
+        // );
       }
     } catch (e) {
       // Handle different authentication exceptions
-      String errorMessage = "Email-already-in-use";
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Color.fromARGB(255, 12, 148, 146),
-          content: Text(
+      var errorMessage = "Email already in use";
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
             errorMessage,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 13.sp),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK',
+                style: TextStyle(color: Color.fromARGB(255, 12, 148, 146)),
+              ),
+            ),
+          ],
         ),
       );
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     backgroundColor: Color.fromARGB(255, 12, 148, 146),
+      //     content: Text(
+      //       errorMessage,
+      //       style: TextStyle(fontWeight: FontWeight.bold),
+      //     ),
+      //   ),
+      // );
     }
   }
 
@@ -471,7 +515,7 @@ class _SignUpState extends State<SignUp> {
                                   padding: const EdgeInsets.only(top: 20),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(context,
+                                      Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context) {
                                         return SignIn(onTap: () {});
                                       }));

@@ -1,7 +1,7 @@
 // import 'package:provider/provider.dart';
-// ignore_for_file: use_build_context_synchronously, avoid_print, await_only_futures
-// import 'dart:math';
+// ignore_for_file: use_build_context_synchronously, avoid_print, await_only_futures, duplicate_import
 import 'dart:developer';
+import 'package:sizer/sizer.dart';
 import '../../pages/notificationSreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -116,12 +116,33 @@ class AuthService {
           email: email, password: password);
       return credential.user;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Color.fromARGB(255, 12, 148, 146),
-          content: Text(
-            "Your not a member please Register now...",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )));
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+            "Your not a member please register now",
+            style: TextStyle(fontSize: 13.sp),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK',
+                style: TextStyle(color: Color.fromARGB(255, 12, 148, 146)),
+              ),
+            ),
+          ],
+        ),
+      );
+
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //     backgroundColor: Color.fromARGB(255, 12, 148, 146),
+      //     content: Text(
+      //       "Your not a member please Register now...",
+      //       style: TextStyle(fontWeight: FontWeight.bold),
+      //     )));
       print("Some error occured");
     }
     return null;

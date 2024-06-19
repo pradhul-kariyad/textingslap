@@ -196,7 +196,7 @@ class _SignInState extends State<SignIn> {
                                     String pattern =
                                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                                     RegExp regExp = RegExp(pattern);
-                                    if (!regExp.hasMatch(value!)) {
+                                    if (!regExp.hasMatch(value)) {
                                       return 'Enter a valid email';
                                     }
                                     return null;
@@ -205,7 +205,7 @@ class _SignInState extends State<SignIn> {
                                     _email = value!;
                                   },
                                   decoration: InputDecoration(
-                                    // labelText: "Email",
+                                      // labelText: "Email",
                                       focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(13),
@@ -250,7 +250,7 @@ class _SignInState extends State<SignIn> {
                                       return 'Please enter password';
                                     }
 
-                                    return value!.length < 6
+                                    return value.length < 6
                                         ? 'Must be at least 6 character'
                                         : null;
                                   },
@@ -398,6 +398,7 @@ class _SignInState extends State<SignIn> {
         return secondHomePage();
       }));
       // Navigator.pushNamed(context, "/home");
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: ColorData.black,
           content: Text(
@@ -405,7 +406,7 @@ class _SignInState extends State<SignIn> {
             style: TextStyle(fontWeight: FontWeight.bold),
           )));
     } else {
-      print("Some error happend");
+      log("Some error happend");
     }
   }
 }

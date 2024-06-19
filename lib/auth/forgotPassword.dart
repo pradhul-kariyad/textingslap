@@ -133,7 +133,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                     String pattern =
                                         r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                                     RegExp regExp = RegExp(pattern);
-                                    if (!regExp.hasMatch(value!)) {
+                                    if (!regExp.hasMatch(value)) {
                                       return 'Enter a valid email';
                                     }
                                     return null;
