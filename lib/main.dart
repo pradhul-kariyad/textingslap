@@ -18,6 +18,7 @@ Future<void> main() async {
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // await Future.delayed(Duration(seconds: 10));
   // FlutterNativeSplash.remove();
+
   await Firebase.initializeApp();
   await AuthService().initNotificatoins();
   runApp(ChangeNotifierProvider(
