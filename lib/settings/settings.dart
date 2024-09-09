@@ -11,6 +11,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 12, 148, 146),
         foregroundColor: Colors.white,
+        // foregroundColor: Colors.white,
       ),
       body: Row(
         children: [
