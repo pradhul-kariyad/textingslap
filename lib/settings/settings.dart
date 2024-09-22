@@ -19,6 +19,12 @@ class SettingsPage extends StatelessWidget {
           CupertinoSwitch(value: true, onChanged: (value) {})
         ],
       ),
+      //  body: Row(
+      //   children: [
+      //     Text("Dark Mode"),
+      //     CupertinoSwitch(value: true, onChanged: (value) {})
+      //   ],
+      // ),
     );
   }
 }
