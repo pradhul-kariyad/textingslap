@@ -347,7 +347,17 @@ class _SignUpState extends State<SignUp> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15),
                                   ),
-                                ),
+                                ),  
+                                //     Padding(
+                                //   padding: const EdgeInsets.only(
+                                //       top: 10, bottom: 10),
+                                //   child: Text(
+                                //     " Email",
+                                //     style: TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15),
+                                //   ),
+                                // ),
                                 // Container(
                                 //   padding: EdgeInsets.only(right: 10),
                                 //   decoration: BoxDecoration(
