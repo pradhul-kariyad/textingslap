@@ -15,18 +15,19 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // await Future.delayed(Duration(seconds: 10));
-  // FlutterNativeSplash.remove();
 
+  // Firebase initialization
   await Firebase.initializeApp();
+
+  // Initialize notifications
   await AuthService().initNotificatoins();
-  runApp(ChangeNotifierProvider(
-    create: (context) {
-      return ThemeProvider();
-    },
-    child: const MyApp(),
-  ));
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -41,15 +42,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) {
-          return ThemesProvider();
-        }),
+        ChangeNotifierProvider(
+          create: (context) => ThemesProvider(),
+        ),
       ],
       child: Sizer(
         builder: (BuildContext context, Orientation orientation,
             DeviceType deviceType) {
           return MaterialApp(
-            // theme: theme.getTheme(),
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             home: AuthGate(),
